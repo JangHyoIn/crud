@@ -1,0 +1,24 @@
+<%= render "nav" %>
+<div class="container">
+  <table style="margin-top:50px;" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성시간</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @post.each do |p|%>
+      <tr>
+        <th scope="row"><%=p.id%></th>
+        <td><a href="/post/view/<%= p.id %>"><%=p.title %></a></td>
+        <td><%=p.user.username%></td>
+        <td><%=p.updated_at.to_s.split('+').first %></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
+  <a href="/post/new"> <button type="submit" class="btn btn-dark">글쓰기</button></a>
+</div>

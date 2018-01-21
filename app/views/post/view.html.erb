@@ -1,0 +1,42 @@
+<%= render "nav" %>
+<div class="container">
+    <div style="margin-top:50px;">
+        <h1><%= @post.title%></h1>
+        <hr />
+        <div style="text-align:right;">
+            <a href="/post/edit/<%= @post.id%>" ><span class="badge badge-success">수정</span></a>
+            <a href="/post/destroy/<%= @post.id%>"><span class="badge badge-danger">삭제</span></a>
+        </div>
+        <h5 style="text-align:right;"><%=@post.user.username%></h5>
+        <h5 style="text-align:right;"><%=@post.updated_at.to_s.split('U').first %></h5>
+        <%if @post.image%>
+        <%=image_tag @post.image%>
+        <%end%>
+        <p><%=@post.content %></p>
+        <hr />
+        
+        <!--댓글쓰는 부분-->
+        <% @post.replies.each do |r| %>
+           -<%=r.user.username %> : <%=r.content%> 
+           <%if current_user.id===r.user.id %>
+           <a href="/reply/destroy/<%= r.id%>"><span class="badge badge-danger">x</span></a>
+           <%end%>
+           <br />
+        <%end%>
+        
+      
+        
+        <form style="margin-top:10px;" action="/reply/create/<%= @post.id%>" method="post">
+            <div class="row">
+                <div class="form-group col-11">
+                    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark col-1">댓글쓰기</button>
+                
+            </div>
+        </form>
+        <div style="text-align:right;">
+            <a href="/post/index"> <button type="submit" class="btn btn-dark">목록으로</button></a>
+        </div>
+    </div>
+</div>
